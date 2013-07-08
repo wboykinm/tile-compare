@@ -37,7 +37,7 @@
                 tileSize: new google.maps.Size(256, 256),
                 name: "Apple",
                 minZoom: 3,
-                maxZoom: 14
+                maxZoom: 18
             })),
 
             map.mapTypes.set("OSM-Mapnik", new google.maps.ImageMapType({
@@ -92,7 +92,7 @@
         var myTitle = document.createElement('h1');
         myTitle.style.color = '#444444';
         myTitle.style.font = "10px sans-serif";
-        myTitle.innerHTML = 'Apple tiles &copy; Apple | <a href="http://blog.osmfoundation.org/2012/03/08/welcome-apple/" target=_new>OSM tiles CC-BY-SA</a> | Google tiles &copy; Google';
+        myTitle.innerHTML = '&copy; Apple | OSM/Mapbox &copy; Openstreetmap Contributors | &copy; Google | &copy; Nokia HERE | &copy; ESRI';
 
         var myTextDiv = document.createElement('div');
         myTextDiv.appendChild(myTitle);
@@ -103,7 +103,7 @@
         var myTitle = document.createElement('h1');
         myTitle.style.color = '#444444';
         myTitle.style.font = "10px sans-serif";
-        myTitle.innerHTML = 'by <a href="http://twitter.com/refnum/">@refnum</a>';
+        myTitle.innerHTML = 'by <a href="http://twitter.com/refnum/" target="_blank">@refnum</a> & <a href="http://twitter.com/vtcraghead" target="_blank">@vtcraghead</a>';
 
         var myTextDiv = document.createElement('div');
         myTextDiv.appendChild(myTitle);
