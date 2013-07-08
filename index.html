@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Street Map Tiles Smackdown</title>
+        <style>
+            /* Style inspired by http://osm.lonvia.de/world_hiking.html */
+            html, body, .slippymap {
+                height: 100%;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+        </style> 
+    </head>
+    <body>
+        <div id="map" class="slippymap" astyle="float: left;"></div>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <script type="text/javascript">
+            var element = document.getElementById("map");
+ 
+            var map = new google.maps.Map(element, {
+                center: new google.maps.LatLng(30, 0),
+                zoom: 3,
+                streetViewControl: false,
+                mapTypeId: "Apple",
+                mapTypeControlOptions: {
+                    mapTypeIds: ["Apple", "OSM-Mapnik", "Google", "Mapbox", "ESRI", "Nokia"],
+                }
+            });
+ 
+            map.mapTypes.set("Apple", new google.maps.ImageMapType({
+                getTileUrl: function(coord, zoom) {
+            return "http://gsp2.apple.com/tile?api=1&style=slideshow&layers=default&lang=de_DE&z=" + zoom + "&x=" + coord.x + "&y=" + coord.y + "&v=9";
+                },
+                tileSize: new google.maps.Size(256, 256),
+                name: "Apple",
+                minZoom: 3,
+                maxZoom: 14
+            })),
+
+            map.mapTypes.set("OSM-Mapnik", new google.maps.ImageMapType({
+                getTileUrl: function(coord, zoom) {
+                    return "http://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+                },
+                tileSize: new google.maps.Size(256, 256),
+                name: "OSM-Mapnik",
+                maxZoom: 18
+            }));
+
+            map.mapTypes.set("Google", new google.maps.ImageMapType({
+                getTileUrl: function(coord, zoom) {
+                    return "http://mt.google.com/vt/hl=en&src=app&x=" + coord.x + "&y=" + coord.y + "&z=" + zoom;
+                },
+                tileSize: new google.maps.Size(256, 256),
+                name: "Google",
+				maxZoom: 18
+            }));
+			
+			map.mapTypes.set("Mapbox", new google.maps.ImageMapType({
+                getTileUrl: function(coord, zoom) {
+                    return "http://b.tiles.mapbox.com/v3/landplanner.map-qd1qeap9/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+                },
+                tileSize: new google.maps.Size(256, 256),
+                name: "Mapbox",
+                maxZoom: 18
+            }));
+			
+			map.mapTypes.set("ESRI", new google.maps.ImageMapType({
+                getTileUrl: function(coord, zoom) {
+                    return "http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/" + zoom + "/" + coord.y + "/" + coord.x + ".png";
+                },
+                tileSize: new google.maps.Size(256, 256),
+                name: "ESRI",
+                maxZoom: 18
+            }));
+			
+			map.mapTypes.set("Nokia", new google.maps.ImageMapType({
+                getTileUrl: function(coord, zoom) {
+                    return "https://maps.nlp.nokia.com/maptiler/v2/maptile/newest/normal.day/" + zoom + "/" + coord.x + "/" + coord.y + "/256/png8?lg=eng&token=A7tBPacePg9Mj_zghvKt9Q&app_id=KuYppsdXZznpffJsKT24";
+                },
+                tileSize: new google.maps.Size(256, 256),
+                name: "Nokia",
+                maxZoom: 18
+            }));
+        </script>
+
+
+    <script type="text/javascript">
+
+        var myTitle = document.createElement('h1');
+        myTitle.style.color = '#444444';
+        myTitle.style.font = "10px sans-serif";
+        myTitle.innerHTML = 'Apple tiles &copy; Apple | <a href="http://blog.osmfoundation.org/2012/03/08/welcome-apple/" target=_new>OSM tiles CC-BY-SA</a> | Google tiles &copy; Google';
+
+        var myTextDiv = document.createElement('div');
+        myTextDiv.appendChild(myTitle);
+
+        map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(myTextDiv);
+
+
+        var myTitle = document.createElement('h1');
+        myTitle.style.color = '#444444';
+        myTitle.style.font = "10px sans-serif";
+        myTitle.innerHTML = 'by <a href="http://twitter.com/refnum/">@refnum</a>';
+
+        var myTextDiv = document.createElement('div');
+        myTextDiv.appendChild(myTitle);
+
+        map.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(myTextDiv);
+    </script>
+
+    </body>
+</html>
