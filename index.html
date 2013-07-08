@@ -1,42 +1,102 @@
 
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Street Map Tiles Smackdown</title>
+        <title>Streetmap Smackdown</title>
         <style>
             /* Style inspired by http://osm.lonvia.de/world_hiking.html */
-            html, body, .slippymap {
+            html, body {
                 height: 100%;
                 width: 100%;
                 margin: 0;
                 padding: 0;
             }
+			#map {width: 100%; /*height:100%;*/ position: absolute; top: 60px; bottom: 0px; background: black; z-index:1;
+			#footer {
+			  position:absolute;
+			  bottom:0px;
+			  left:0px;
+			  right:0px;
+			  background:#fff;
+			  z-index:999;
+			  overflow:auto;
+			  height:160px;
+			  padding:5px;
+			  opacity:0.9;
+			}
+			h2 {color:#333;}
         </style> 
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/journal/bootstrap.min.css" />
     </head>
     <body>
-        <div id="map" class="slippymap" astyle="float: left;"></div>
+        <div id="map" class="map" astyle="float: left;"></div>
+		
+		<!--SOME BOOTSTRAP NAV BOILERPLATE TO MAKE THINGS SIMPLE AND APPEALING-->
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand">Streetmap Smackdown</a>
+		  <ul class="nav nav-pills">
+		    <li class="divider-vertical"></li>
+			<li><a href="#myModal" role="button" class="lead btn-primary" data-toggle="modal"><large>Vote</large></a></li>
+		  </ul>
+        </div>
+      </div>
+    </div>
+<!-- Modal -->
+	<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <!--<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+        <h3 id="myModalLabel">Vote!</h3>
+      </div>-->
+      <div class="modal-body">
+        <!--<p>Which tiled basemap do you use most frequently? Add your perspective below . . .</p>
+        <hr>-->
+        <iframe src="https://docs.google.com/forms/d/1mjY2CIcGJNAFbk9zWGiCG-U9wkkQyUyjIUu2gAVqzWw/viewform?embedded=true" width="500" height="1220" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      </div>
+    </div>
+	
+	<div id="footer">
+		<div class="container">
+				<ul class="inline">
+					<li><h2>Median Age at the 2010 Census</h2></li>
+					<li class="divider"></li>
+				</ul>  
+         </div>
+    </div>
+	
+	
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+		<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
         <script type="text/javascript">
             var element = document.getElementById("map");
  
             var map = new google.maps.Map(element, {
                 center: new google.maps.LatLng(30, 0),
                 zoom: 3,
+				zoomControlOptions: {
+					style: google.maps.ZoomControlStyle.SMALL
+				},
 				maxZoom: 14,
                 streetViewControl: false,
-                mapTypeId: "Apple",
+                mapTypeId: "Geosprocket-Demo",
                 mapTypeControlOptions: {
-                    mapTypeIds: ["Apple", "OSM-Mapnik", "Google", "Mapbox", "ESRI", "Nokia"],
+                    mapTypeIds: ["Apple-iPhoto", "ESRI", "Geosprocket-Demo", "Google", "Mapbox", "Nokia", "OSM-Mapnik", "Stamen-Toner", "Stamen-Watercolor"],
                 }
             });
  
-            map.mapTypes.set("Apple", new google.maps.ImageMapType({
+            map.mapTypes.set("Apple-iPhoto", new google.maps.ImageMapType({
                 getTileUrl: function(coord, zoom) {
             return "http://gsp2.apple.com/tile?api=1&style=slideshow&layers=default&lang=de_DE&z=" + zoom + "&x=" + coord.x + "&y=" + coord.y + "&v=9";
                 },
                 tileSize: new google.maps.Size(256, 256),
-                name: "Apple",
+                name: "Apple-iPhoto",
                 minZoom: 3,
                 maxZoom: 18
             })),
@@ -85,6 +145,33 @@
                 name: "Nokia",
                 maxZoom: 18
             }));
+			
+			map.mapTypes.set("Stamen-Toner", new google.maps.ImageMapType({
+                getTileUrl: function(coord, zoom) {
+                    return "http://tile.stamen.com/toner/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+                },
+                tileSize: new google.maps.Size(256, 256),
+                name: "Stamen-Toner",
+                maxZoom: 18
+            }));
+			
+			map.mapTypes.set("Stamen-Watercolor", new google.maps.ImageMapType({
+                getTileUrl: function(coord, zoom) {
+                    return "http://tile.stamen.com/watercolor/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+                },
+                tileSize: new google.maps.Size(256, 256),
+                name: "Stamen-Watercolor",
+                maxZoom: 18
+            }));
+			
+			map.mapTypes.set("Geosprocket-Demo", new google.maps.ImageMapType({
+                getTileUrl: function(coord, zoom) {
+                    return "http://b.tiles.mapbox.com/v3/landplanner.geosprocket-basemap/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+                },
+                tileSize: new google.maps.Size(256, 256),
+                name: "Geosprocket-Demo",
+                maxZoom: 7
+            }));
         </script>
 
 
@@ -93,7 +180,7 @@
         var myTitle = document.createElement('h1');
         myTitle.style.color = '#444444';
         myTitle.style.font = "10px sans-serif";
-        myTitle.innerHTML = '&copy; Apple | OSM/Mapbox &copy; Openstreetmap Contributors | &copy; Google | &copy; Nokia HERE | &copy; ESRI';
+        myTitle.innerHTML = '&copy; Apple | OSM/Mapbox &copy; Openstreetmap Contributors | &copy; Google | &copy; Nokia HERE | &copy; ESRI |&copy; Stamen Design';
 
         var myTextDiv = document.createElement('div');
         myTextDiv.appendChild(myTitle);
