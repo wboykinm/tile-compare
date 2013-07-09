@@ -6,7 +6,6 @@
         <meta charset="utf-8" />
         <title>Streetmap Smackdown</title>
         <style>
-            /* Style inspired by http://osm.lonvia.de/world_hiking.html */
             html, body {
                 height: 100%;
                 width: 100%;
@@ -74,9 +73,9 @@
 				},
 				maxZoom: 14,
                 streetViewControl: false,
-                mapTypeId: "Geosprocket-Demo",
+                mapTypeId: "Geosprocket Demo",
                 mapTypeControlOptions: {
-                    mapTypeIds: ["Apple-iPhoto", "ESRI", "Geosprocket-Demo", "Google", "Mapbox", "National Geographic", "Nokia", "OSM-Mapnik", "Stamen-Toner", "Stamen-Watercolor"],
+                    mapTypeIds: ["Apple-iPhoto", "ESRI", "Geosprocket Demo", "Google", "Mapbox", "National Geographic", "Nokia", "OSM-Mapnik", "Stamen-Toner", "Stamen-Watercolor"],
                 }
             });
  
@@ -146,7 +145,7 @@
 			
 			map.mapTypes.set("Stamen-Toner", new google.maps.ImageMapType({
                 getTileUrl: function(coord, zoom) {
-                    return "http://tile.stamen.com/toner/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+                    return "http://tile.stamen.com/toner/" + zoom + "/" + coord.x + "/" + coord.y + ".jpg";
                 },
                 tileSize: new google.maps.Size(256, 256),
                 name: "Stamen-Toner",
@@ -155,19 +154,19 @@
 			
 			map.mapTypes.set("Stamen-Watercolor", new google.maps.ImageMapType({
                 getTileUrl: function(coord, zoom) {
-                    return "http://tile.stamen.com/watercolor/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+                    return "http://tile.stamen.com/watercolor/" + zoom + "/" + coord.x + "/" + coord.y + ".jpg";
                 },
                 tileSize: new google.maps.Size(256, 256),
                 name: "Stamen-Watercolor",
                 maxZoom: 18
             }));
 			
-			map.mapTypes.set("Geosprocket-Demo", new google.maps.ImageMapType({
+			map.mapTypes.set("Geosprocket Demo", new google.maps.ImageMapType({
                 getTileUrl: function(coord, zoom) {
                     return "http://b.tiles.mapbox.com/v3/landplanner.geosprocket-basemap/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
                 },
                 tileSize: new google.maps.Size(256, 256),
-                name: "Geosprocket-Demo",
+                name: "Geosprocket Demo",
                 maxZoom: 7
             }));
         </script>
