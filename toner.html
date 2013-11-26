@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Homage to Toner</title>
+        <style>
+            html, body {
+                height: 100%;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+			#map {width: 100%; /*height:100%;*/ position: absolute; top: 60px; bottom: 0px; background: black; z-index:1;
+			#footer {
+			  position:absolute;
+			  bottom:0px;
+			  left:0px;
+			  right:0px;
+			  background:#fff;
+			  z-index:999;
+			  overflow:auto;
+			  height:160px;
+			  padding:5px;
+			  opacity:0.9;
+			}
+			h2 {color:#333;}
+        </style> 
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/journal/bootstrap.min.css" />
+    </head>
+    <body>
+        <div id="map" class="map" astyle="float: left;"></div>
+		
+		<!--SOME BOOTSTRAP NAV BOILERPLATE TO MAKE THINGS SIMPLE AND APPEALING-->
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand">Homage to Stamen's Toner Style</a>
+		  <ul class="nav nav-pills">
+		    <li class="divider-vertical"></li>
+			<!--<li><a href="#myModal" role="button" class="lead btn-primary" data-toggle="modal"><large>Vote</large></a></li>
+		  </ul>
+		  <ul class="nav nav-pills pull-right">
+		    <li><a href="http://geosprocket.blogspot.com/2013/07/tiled-basemaps-survey.html" target="_blank"><small>About</small></a></li>-->
+		  </ul>
+        </div>
+      </div>
+    </div>
+<!-- Modal -->
+	<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <!--<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+        <div class="alert" id="myModalLabel"><a href="https://docs.google.com/forms/d/1mjY2CIcGJNAFbk9zWGiCG-U9wkkQyUyjIUu2gAVqzWw/viewform" target="_blank">Click here to view the survey on its own page</a></div>
+      </div>-->
+      <div class="modal-body">
+	    <div class="alert" id="myModalLabel">
+		  <a href="https://docs.google.com/forms/d/1mjY2CIcGJNAFbk9zWGiCG-U9wkkQyUyjIUu2gAVqzWw/viewform" target="_blank">Click here to view the survey on its own page</a>
+		</div>
+        <!--<p>Which tiled basemap do you use most frequently? Add your perspective below . . .</p>
+        <hr>-->
+        <iframe src="https://docs.google.com/forms/d/1mjY2CIcGJNAFbk9zWGiCG-U9wkkQyUyjIUu2gAVqzWw/viewform?embedded=true" width="500" height="1550" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      </div>
+    </div>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+		<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            var element = document.getElementById("map");
+
+            var styles = [
+                {
+                    featureType: 'water',
+                    elementType: 'all',
+                    stylers: [
+                        { hue: '#000000' },
+                        { saturation: -100 },
+                        { lightness: -100 },
+                        { visibility: 'simplified' }
+                    ]
+                },{
+                    featureType: 'landscape',
+                    elementType: 'all',
+                    stylers: [
+                        { hue: '#FFFFFF' },
+                        { saturation: -100 },
+                        { lightness: 100 },
+                        { visibility: 'simplified' }
+                    ]
+                },{
+                    featureType: 'landscape.man_made',
+                    elementType: 'all',
+                    stylers: [
+
+                    ]
+                },{
+                    featureType: 'landscape.natural',
+                    elementType: 'all',
+                    stylers: [
+
+                    ]
+                },{
+                    featureType: 'poi.park',
+                    elementType: 'geometry',
+                    stylers: [
+                        { hue: '#ffffff' },
+                        { saturation: -100 },
+                        { lightness: 100 },
+                        { visibility: 'off' }
+                    ]
+                },{
+                    featureType: 'road',
+                    elementType: 'all',
+                    stylers: [
+                        { hue: '#333333' },
+                        { saturation: -100 },
+                        { lightness: -69 },
+                        { visibility: 'simplified' }
+                    ]
+                },{
+                    featureType: 'poi.attraction',
+                    elementType: 'geometry',
+                    stylers: [
+                        { hue: '#ffffff' },
+                        { saturation: -100 },
+                        { lightness: 100 },
+                        { visibility: 'off' }
+                    ]
+                },{
+                    featureType: 'administrative.locality',
+                    elementType: 'geometry',
+                    stylers: [
+                        { hue: '#ffffff' },
+                        { saturation: 0 },
+                        { lightness: 100 },
+                        { visibility: 'off' }
+                    ]
+                },{
+                    featureType: 'poi.government',
+                    elementType: 'geometry',
+                    stylers: [
+                        { hue: '#ffffff' },
+                        { saturation: -100 },
+                        { lightness: 100 },
+                        { visibility: 'off' }
+                    ]
+                }
+            ];
+            var options = {
+                mapTypeControlOptions: {
+                    mapTypeIds: [ 'Google-Toner', 'Stamen-Toner', 'Mapbox-Toner']
+                },
+                center: new google.maps.LatLng(27, 50),
+                zoom: 4,
+                zoomControlOptions: {
+                    style: google.maps.ZoomControlStyle.SMALL
+                },
+                streetViewControl: false,
+                mapTypeId: 'Google-Toner'
+            };
+            var div = document.getElementById('map');
+            var map = new google.maps.Map(div, options);
+            var styledMapType = new google.maps.StyledMapType(styles, { name: 'Google-Toner' });
+            map.mapTypes.set('Google-Toner', styledMapType);
+
+			
+			map.mapTypes.set("Mapbox-Toner", new google.maps.ImageMapType({
+                getTileUrl: function(coord, zoom) {
+                    return "http://a.tiles.mapbox.com/v3/landplanner.gcpa8m7n/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+                },
+                tileSize: new google.maps.Size(256, 256),
+                name: "Mapbox-Toner",
+                maxZoom: 18
+            }));
+			
+			
+			map.mapTypes.set("Stamen-Toner", new google.maps.ImageMapType({
+                getTileUrl: function(coord, zoom) {
+                    return "http://tile.stamen.com/toner/" + zoom + "/" + coord.x + "/" + coord.y + ".jpg";
+                },
+                tileSize: new google.maps.Size(256, 256),
+                name: "Stamen-Toner",
+                maxZoom: 18
+            }));
+			
+			
+        </script>
+
+
+    <script type="text/javascript">
+
+        var myTitle = document.createElement('h1');
+        myTitle.style.color = '#444444';
+        myTitle.style.font = "10px sans-serif";
+      myTitle.innerHTML = 'Cred as Follows: &copy; Apple | OSM/Mapbox &copy; Openstreetmap Contributors | &copy; Google | &copy; National Geographic | &copy; Nokia HERE | &copy; ESRI |&copy; Stamen Design';
+
+        var myTextDiv = document.createElement('div');
+        myTextDiv.appendChild(myTitle);
+
+        map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(myTextDiv);
+
+
+        var myTitle = document.createElement('h1');
+        myTitle.style.color = '#444444';
+        myTitle.style.font = "10px sans-serif";
+        myTitle.innerHTML = 'by <a href="http://twitter.com/refnum/" target="_blank">@refnum</a> & <a href="http://twitter.com/vtcraghead" target="_blank">@vtcraghead</a>';
+
+        var myTextDiv = document.createElement('div');
+        myTextDiv.appendChild(myTitle);
+
+        map.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(myTextDiv);
+    </script>
+
+    </body>
+</html>
