@@ -168,7 +168,7 @@
 			
 			map.mapTypes.set("Geosprocket Demo", new google.maps.ImageMapType({
                 getTileUrl: function(coord, zoom) {
-                    return "http://b.tiles.mapbox.com/v3/landplanner.geosprocket-basemap/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+                    return "https://s3.amazonaws.com/geosprocket-basemap/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
                 },
                 tileSize: new google.maps.Size(256, 256),
                 name: "Geosprocket Demo",
